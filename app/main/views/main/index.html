@@ -1,0 +1,71 @@
+<:Title>
+  Home
+
+<:Body>
+
+  {{ if Volt.current_user }}
+    <form e-submit="add_expense">
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="Enter a description" value="{{ page._new_description }}">
+      </div>
+      <div class="input-group">
+        <input type="number" step="any" class="form-control" placeholder="Enter an amount" value="{{ page._new_amount }}" aria-describedby="basic-addon2">
+        <span class="input-group-addon" id="basic-addon2">€</span>
+      </div>
+      <br />
+      <div class="form-group">
+        <select class="form-control" id='category' value='{{ page._category }}' title="Pick One">
+          <option selected value="Markt">Markt</option>
+          <option value="Mittagessen">Mittagessen</option>
+          <option value="Einkauf">Einkauf</option>
+          <option value="Sonstige">Sonstige</option>
+        </select>
+      </div>
+
+      <button class="btn btn-info btn-block">Add Expense</button>
+    </form>
+
+    <div class="page-header">
+      <h1>{{ store._expenses.count }} entires <small>{{ store._expenses.map(&:amount).inject(0, &:+) }}€ in total</small></h1>
+    </div>
+
+    <table class='table table-striped'>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Created on</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ store._expenses.each do |e| }}
+          <tr>
+            <td>{{ e.description }}</td>
+            <td>{{ e.amount }}€</td>
+            {{ if e.created_at.present? }}
+              <td>
+                {{ e.created_at.strftime('%d %b %Y') }}
+                {{ if e.can_delete?(:body) }}
+                  <span class="pull-right">
+                    <button e-click="e.destroy" class="btn btn-xs btn-danger glyphicon glyphicon-trash"> </button>
+                  </span>
+                {{ end }}
+                <br>
+                <small> by {{ e.user.name }}</small>
+              </td>
+            {{ else }}
+              <td>
+                {{ if e.can_delete?(:body) }}
+                  <span class="pull-right">
+                    <button e-click="e.destroy" class="btn btn-xs btn-danger glyphicon glyphicon-trash"> </button>
+                  </span>
+                {{ end }}
+              </td>
+            {{ end }}
+          </tr>
+        {{ end }}
+      </tbody>
+    </table>
+  {{ else }}
+    <:user_templates:login post-login-url="/" />
+  {{ end }}
