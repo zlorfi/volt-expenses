@@ -4,14 +4,8 @@ module Main
 
     model :store
 
-    # before_action do
-    #   require_login('Please log in.')
+    # def index
     # end
-
-    def index
-      # self.model = store._expenses.order(amount: :asc)
-      self.model = store._expenses.order(:amount)
-    end
 
     private
 
@@ -19,11 +13,10 @@ module Main
     def add_expense
       store
         ._expenses
-        .create(description: page._new_description, amount: page._new_amount, created_at: Time.now, category: page._category)
+        .create(description: page._new_description, amount: page._new_amount, created_at: Time.now, category_id: page._category_id)
         .then { page._new_description = '' }
         .then { page._new_amount = '' }
         .fail { |err| add_error(err) }
-        # .fail { |err| flash._errors << err.to_s}
     end
 
     def add_error(error)
