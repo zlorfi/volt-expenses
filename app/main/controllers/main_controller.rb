@@ -9,6 +9,12 @@ module Main
 
     private
 
+    # def index_ready
+    #   if RUBY_PLATFORM == 'opal'
+    #     `$(#{first_element}).find('#category:first').selectize({create: true, sortField: 'text'});`
+    #   end
+    # end
+
     # Save the post
     def add_expense
       store
@@ -16,6 +22,7 @@ module Main
         .create(description: page._new_description, amount: page._new_amount, created_at: Time.now, category_id: page._category_id)
         .then { page._new_description = '' }
         .then { page._new_amount = '' }
+        .then { page._category_id = '' }
         .fail { |err| add_error(err) }
     end
 
