@@ -4,8 +4,8 @@ module Main
 
     model :store
 
-    # def index
-    # end
+    def index
+    end
 
     private
 

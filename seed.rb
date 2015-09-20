@@ -1,4 +1,4 @@
-# execute with 'bundle exec volt runner seed.rb'
+# execute with 'RACK_ENV=production bundle exec volt runner seed.rb'
 
 CATEGORIES = %w(Snack Mittagessen Einkauf Markt Sonstiges)
 
