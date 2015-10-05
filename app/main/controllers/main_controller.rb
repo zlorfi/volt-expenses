@@ -7,13 +7,21 @@ module Main
     def index
     end
 
+    def chart
+    end
+
+    def index_ready
+      `$('table.table').hide()`
+    end
+
+
     private
 
-    # def index_ready
-    #   if RUBY_PLATFORM == 'opal'
-    #     `$(#{first_element}).find('#category:first').selectize({create: true, sortField: 'text'});`
-    #   end
-    # end
+    def make_selecable
+      # if RUBY_PLATFORM == 'opal'
+      #   `$(#{first_element}).find('#category').selectize({create: true, sortField: 'text'});`
+      # end
+    end
 
     # Save the post
     def add_expense
